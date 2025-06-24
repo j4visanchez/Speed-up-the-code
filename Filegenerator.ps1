@@ -5,6 +5,7 @@ $errorTypes = @('Sandextrator overload', 'Conveyor misalignment', 'Valve stuck',
 $plcNames = @('PLC_A', 'PLC_B', 'PLC_C', 'PLC_D')
 $statusCodes = @('OK', 'WARN', 'ERR')
 $recordCount = 50000
+$logFilePath = "plc_log.txt"
 
 $results = New-Object string[] $recordCount
 $timestamps = New-Object string[] $recordCount
@@ -43,5 +44,11 @@ $logEntries = 0..($recordCount - 1) | ForEach-Object {
     "$($results[$_]);$($timestamps[$_]);$($plcs[$_]);$($errorTypeStrings[$_]);$($values[$_]);$($operators[$_]);$($batches[$_]);$($machineTemps[$_]);$($loads[$_])"
 }
 
-$logEntries | Out-File -FilePath "plc_log.txt"
+$streamWriter = [System.IO.StreamWriter]::new($logFilePath, $false, [System.Text.Encoding]::UTF8)
+
+foreach ($entry in $logEntries) {
+    $streamWriter.WriteLine($entry)
+}
+
+$streamWriter.Close()
 }
