@@ -17,7 +17,7 @@ $plc=$plcNames[$random.Next(0,$plcNames.Length)];
 $status=$statusCodes[$random.Next(0,$statusCodes.Length)];
 $operator=$random.Next(101, 122);
 $batch=$random.Next(1000, 1101);
-$machineTemp=[math]::Round(($random.Next(60, 110)+$random.Next()),2);
+$machineTemp=$random.Next();
 $load=$random.Next(0,102);
 $logEntries[$i]="$result;$timestampStr;$plc;$errorType;$value;$status;$operator;$batch;$machineTemp;$load";
 };
